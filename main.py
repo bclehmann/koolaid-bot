@@ -1,3 +1,4 @@
+import datetime
 import time
 import json
 import os
@@ -33,6 +34,12 @@ def main():
 
 					comment.refresh()
 					if comment.parent().author == reddit.config.username:
+						continue
+
+					now = datetime.datetime.now(datetime.timezone.utc).timestamp()
+					age = now - comment.created_utc
+
+					if age > 2 * 60 * 60:  # 2 hours
 						continue
 
 					skip = False
